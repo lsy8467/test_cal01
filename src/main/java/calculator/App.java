@@ -7,6 +7,7 @@ public class App {
     public static void main(String[] args) {
         int[] intArray = new int[10];
         int index = 0;
+        boolean isFull = false; //배열이 가득차 있는지 확인.
 
         Scanner sc = new Scanner(System.in);
 
@@ -37,8 +38,20 @@ public class App {
             }
 
             System.out.println("결과 :" + result);
-            intArray[index] = result;
-            index++;
+
+            if (isFull) { //isFull = 배열이 가득 찼는지 여부를 나타냄.
+                for (int i = 1; i < intArray.length; i++) { //배열을 하나씩 당김
+                    intArray[i - 1] = intArray[i]; // 인덱스 i의 값을 i - 1에 복사
+                }
+                intArray[intArray.length - 1] = result;
+            } else {
+                intArray[index] = result;
+                index++;
+                if (index == intArray.length) {
+                    isFull = true; // 배열이 가득 찼을 때 표시해줌
+                }
+            }
+
             System.out.println("더 계산하시겠습니까? (exit 입력시 종료)");
             String input = sc.next();
             if (input.equals("exit")) {
